@@ -1,9 +1,11 @@
 $(function () {
   $('.zc').on('click', function () {
+    console.log('switchZC');
     $('.login-box').hide()
     $('.reg-box').show()
   })
   $('.dl').on('click', function () {
+    console.log('switchDL');
     $('.login-box').show()
     $('.reg-box').hide()
   })
@@ -42,7 +44,9 @@ $(function () {
       var pwe = $('#mm').val()
 
       if (pwe !== value) {
-        return '两次输入不一致'
+        console.log('下次V型从V型从');
+        return '两次输入不一致11111111'
+
       }
     }
   });
@@ -54,50 +58,23 @@ $(function () {
 
 
 
-
-
-
-  // 注册监听事件
+  //注册监听事件
   $('#form_reg').on('submit', function (e) {
-
+    console.log('1');
     e.preventDefault()
-    $.post('/api/reguser',
-      {
-        username: $('#form_reg [name=username]').val(),
-        password: $('#form_reg [name=password]').val(),
-      },
-      function (res) {
-        if (res.status !== 0) {
-          return layer.msg(res.message)
-        }
-        layer.msg('注册成功')
+
+    console.log('2');
+    $.post('http://ajax.frontend.itheima.net/api/reguser', {
+      username: $('#form_reg [name=username]').val(),
+      password: $('#form_reg [name=password]').val()
+    }, function (res) {
+      if (res.status !== 0) {
+        return console.log(res.message);
+      } else {
+        console.log('注册成功！');
       }
-    )
+    })
   })
-
-
-  $('#form_login').on('submit', function (e) {
-    e.preventDefault()
-    $.post('/api/login',
-      {
-        username: $('#form_login [name=username]').val(),
-        password: $('#form_login [name=password]').val(),
-      },
-      function (res) {
-        if (res.status !== 0) {
-          return layer.msg(res.message)
-        }
-        layer.msg('登陆成功')
-        // 保存到本地数据
-        // localStorage.setItem('token', res.token)
-        // console.log(res.token);
-        // 跳转到指定页面
-        location.href = 'index.html'
-      }
-
-    )
-  })
-
 
 
 

@@ -17,10 +17,56 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+}
+
+.reg-box {
+  display: none;
 }
 
 .titleBox {
   background: url(../images/login_title.png) no-repeat center;
   height: 60px;
-  background-color: #ccc;
+  /* background-color: #ccc; */
+}
+
+.layui-form {
+  padding: 0 33px;
+}
+
+.layui-input-block {
+  position: relative;
+  width: 100%;
+  margin-left: 0;
+  height: 38px;
+  margin-bottom: 15px;
+
+}
+
+.layui-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.layui-btn {
+  height: 38px;
+  /* margin-top: 25px; */
+  width: 100%;
+  font-size: 16px;
+}
+
+.layui-input {
+  height: 38px;
+  padding-left: 28px;
+}
+
+.reg-box .layui-input-block {
+  margin-bottom: 15px;
+}
+
+.links {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
