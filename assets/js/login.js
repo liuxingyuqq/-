@@ -14,7 +14,6 @@ $(function () {
 
 
 
-
   form.verify({
     username: function (value, item) { //value：表单的值、item：表单的DOM对象
       if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
@@ -73,11 +72,12 @@ $(function () {
         layer.msg('注册成功')
       }
     )
+    $('.dl').click()
   })
 
 
   $('#form_login').on('submit', function (e) {
-    e.preventDefault()
+    e.preventDefault();
     $.post('/api/login',
       {
         username: $('#form_login [name=username]').val(),
@@ -85,15 +85,14 @@ $(function () {
       },
       function (res) {
         if (res.status !== 0) {
-          return layer.msg(res.message)
+          return layer.msg('用户名或密码错误')
         }
         layer.msg('登陆成功')
-        // 保存到本地数据
-        // localStorage.setItem('token', res.token)
-        // console.log(res.token);
-        // 跳转到指定页面
+
+        localStorage.setItem('token', res.token)
         location.href = 'index.html'
       }
+
 
     )
   })

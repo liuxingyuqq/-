@@ -1,87 +1,68 @@
 $(function () {
-  $('.text-avatar').hide()
-  $('.layui-nav-img').hide()
-  getUserInfo();
-
-  // 获取弹出层对象
-  var layer = layui.layer;
-
-  // 点击按钮，实现退出功能
-  $('#btnLogout').on('click', function() {
-    // 提示用户是否确认退出
-    layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function(index) {
+  getUserInfo()
+  // 实现退出事件
+  var layer = layui.layer
+  $('#idLogout').on('click', function () {
+    layer.confirm('确认退出？', { icon: 3, title: '提示' }, function (index) {
       //do something
-      // 1. 清空本地存储中的 token
       localStorage.removeItem('token')
-      // 2. 重新跳转到登录页面
-      location.href = '/login.html'
-
-      // 关闭 confirm 询问框
-      layer.close(index)
-    })
+      // console.log(tosken);
+      location.href = './login.html'
+      layer.close(index);
+    });
   })
 })
 
-// 获取用户的基本信息
 function getUserInfo() {
   $.ajax({
-    method: 'GET',
+    method: 'get',
     url: '/my/userinfo',
-    // headers 就是请求头配置对象
-    headers: {
-      Authorization: localStorage.getItem('token') || ''
-    },
-    success: function(res) {
+    // headers是请求头配置对象
+    // headers: {
+    //   Authorization: localStorage.getItem('token') || ''
+    // },
+    success: function (res) {
       if (res.status !== 0) {
-        return layui.layer.msg('获取用户信息失败！')
+        return layer.msg('获取失败')
+
       }
-      // 调用 renderAvatar 渲染用户的头像
-      renderAvatar(res.data)
+      console.log(res);
+      renderer(res.data)
     },
-    // // 不论成功还是失败，最终都会调用 complete 回调函数
-    // complete: function(res) {
-    //   // console.log('执行了 complete 回调：')
-    //   // console.log(res)
-    //   // 在 complete 回调函数中，可以使用 res.responseJSON 拿到服务器响应回来的数据
+    //无论服务器回调的成功与否都会调用complete这个属性
+    // complete: function (res) {
+    //   // console.log('执行了回调');
+    //   // console.log(res);
+    //   //在complete回调函数中，可以使用res.responseJSON拿到服务器相应回来的数据
+    //   //如果res里的responseJSON属性的status等于1，并且message等于身份认证失败这个字符串
     //   if (res.responseJSON.status === 1 && res.responseJSON.message === '身份认证失败！') {
-    //     // 1. 强制清空 token
+    //     //强制删除token值
     //     localStorage.removeItem('token')
-    //     // 2. 强制跳转到登录页面
-    //     location.href = '/login.html'
+    //     //强制跳转到login.html页面
+    //     location.href = 'login.html'
     //   }
+
     // }
   })
+
 }
 
-// 渲染用户的头像
-function renderAvatar(user) {
-  // 1. 获取用户的名称
+function renderer(user) {
+  // 如果有昵称name是昵称，没有就是用户名
   var name = user.nickname || user.username
-  // 2. 设置欢迎的文本
+
+  // 把welcome中的名字部分改为name
   $('#welcome').html('欢迎&nbsp;&nbsp;' + name)
-  // 3. 按需渲染用户的头像
+  // 做判断，如果头像等于空，就是设置了头像
   if (user.user_pic !== null) {
-    // 3.1 渲染图片头像
-    $('.layui-nav-img')
-      .attr('src', user.user_pic)
-      .show()
-    $('.text-avatar').hide()
+    // 渲染出已设置的头像
+    $('.layui-nav-img').attr('src', user.user_pic).show()
   } else {
-    // 3.2 渲染文本头像
+    // 隐藏头像框
     $('.layui-nav-img').hide()
+    // 选出第一个字符，并设置为大写
     var first = name[0].toUpperCase()
-    $('.text-avatar')
-      .html(first)
-      .show()
+    // 把第一个字符渲染到框内，并show显示出来
+    $('.portrait').html(first).show()
   }
 }
-
-  /**
-   * 主动切换 nav 
-   * @param {*} newNavId 新的 nav 元素 id
-   * @param {*} oldNavId 旧的 nav 元素 id
-   */
-  function changeNav (newNavId, oldNavId) {
-    $('#' + oldNavId).removeClass('layui-this');
-    $('#' + newNavId).addClass('layui-this');
-  }
