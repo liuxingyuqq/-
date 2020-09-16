@@ -26,7 +26,7 @@ function getUserInfo() {
         return layer.msg('获取失败')
 
       }
-      console.log(res);
+      // console.log(res);
       renderer(res.data)
     },
     //无论服务器回调的成功与否都会调用complete这个属性

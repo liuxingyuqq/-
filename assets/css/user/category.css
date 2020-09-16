@@ -1,0 +1,12 @@
+#bt {
+
+    display: flex;
+
+    justify-content: space-between;
+
+}
+
+.aa {
+    padding-right: 40px;
+    margin-top: 30px;
+}
